@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('pessoas', function (Blueprint $table) {
             $table->id();
             $table->string('name', 150);
-            $table->string('cpf', 20)->nullable->unique();
+            $table->string('cpf', 20)->nullable();
             $table->timestamps();
         });
     }
