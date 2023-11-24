@@ -35,27 +35,30 @@ class PessoasController extends Controller {
             }
         }
 
-    public function update($id, Request $request) {
-        try {
-            $request->validate([
-                'name' => 'required | min: 3 | max: 150',
-                'cpf' => 'min: 11 | max: 20',
-                'contact' => 'max: 20',
-            ]);
+        public function update($id, Request $request) {
+            try {
+                $request->validate([
+                    'name' => 'required | min: 3 | max: 150',
+                    'cpf' => 'min: 11 | max: 20',
+                    'contact' => 'max: 20',
+                ]);
+    
+                /*Encontra a pessoa com o id */
+                $pessoa = Pessoa::find($id);
+    
+                if (empty($pessoa)) {
+                    return $this->response('Pessoa não encontrada.', null, false, 404);
+                }
+    
+                $pessoa->update($request->all());
+                $message = $pessoa->name . " atualizado com sucesso.";
 
-            $pessoa = Pessoa::find($id);
-
-            if (empty($pessoa)) {
-                return $this->response('Pessoa não encontrada.', null, false, 404);
+                return $this->response($message, $pessoa);
+                
+            } catch (\Exception $exception) {
+                return $this->response($exception->getMessage(), null, false, 500);
             }
-
-            $pessoa->update($request->all());
-            $message = $pessoa->name . " atualizado com sucesso.";
-            return $this->response($message, $pessoa);
-        } catch (\Exception $exception) {
-            return $this->response($exception->getMessage(), null, false, 500);
         }
-    }
 
     public function destroy($id) {
         try {

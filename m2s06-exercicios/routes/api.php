@@ -17,4 +17,11 @@ use App\Http\Controllers\PessoasController;
 
 /*Agrupamento de rotas */
 Route::resource('pessoas', PessoasController::class)
-    ->only(['index', 'show', 'store', 'update', 'destroy']);
+    ->only
+        ([
+            'index', 
+            'show', 
+            'store', 
+            'update', 
+            'destroy'
+        ]);
